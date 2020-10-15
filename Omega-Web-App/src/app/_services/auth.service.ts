@@ -1,3 +1,5 @@
+import { Router } from '@angular/router';
+import { AlertifyService } from './alertify.service';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
@@ -11,7 +13,7 @@ export class AuthService {
 baseUrl = environment.apiUrl +"Authenticate/";
 jwtHelper = new JwtHelperService();
 decodedToken : any;
-constructor(private http: HttpClient) {}
+constructor(private http: HttpClient,private alertify: AlertifyService,private router: Router) {}
 
 login(model: any){
   return this.http.post(this.baseUrl+'login', model)
@@ -21,7 +23,6 @@ login(model: any){
       if(user){
         localStorage.setItem('token',user.token);
         this.decodedToken = this.jwtHelper.decodeToken(user.token);
-        console.log(this.decodedToken);
       }
     })
   );
@@ -29,5 +30,16 @@ login(model: any){
 loggedIn() {
   const token = localStorage.getItem('token');
   return !this.jwtHelper.isTokenExpired(token);
+}
+isAdmin() {
+  return this.decodedToken.role == "Admin";
+}
+canActivateAsAdmin(){
+  if (this.isAdmin()) {
+    return true;
+  }
+  this.alertify.error('شما دسترسی لازم برای ورود به این بخش را ندارید');
+  this.router.navigate(['dashboard']);
+  return false;
 }
 }

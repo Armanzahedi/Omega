@@ -8,8 +8,4 @@
     <ProjectReference Include="..\Omega.Core\Omega.Core.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Helpers\" />
-  </ItemGroup>
-
 </Project>

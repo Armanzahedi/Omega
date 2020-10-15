@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -17,6 +18,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Omega.Core.Models;
 using Omega.Infrastructure;
+using Omega.Infrastructure.Helpers;
 using Omega.Infrastructure.Repositories;
 
 namespace Omega.API
@@ -33,13 +35,15 @@ namespace Omega.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson(opt =>
+            opt.SerializerSettings.ReferenceLoopHandling = 
+            Newtonsoft.Json.ReferenceLoopHandling.Ignore);
             services.AddDbContext<MyDbContext>(opt =>
             {
                 opt.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"), b => b.MigrationsAssembly("Omega.Infrastructure"));
             });
             services.AddCors();
-
+            services.AddAutoMapper(typeof(AuthRepsitory).Assembly);
             services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<MyDbContext>().AddDefaultTokenProviders();
             services.AddAuthentication(options =>
             {
@@ -59,7 +63,8 @@ namespace Omega.API
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["JWT:Secret"]))
                 };
             });
-
+            services.AddScoped<IBzApiHelper, BzApiHelper>();
+            services.AddScoped<IBzApiRepository, BzApiRepository>();
             services.AddScoped<IAuthRepository, AuthRepsitory>();
         }
 
