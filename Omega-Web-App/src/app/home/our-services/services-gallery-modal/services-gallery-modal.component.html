@@ -1,0 +1,13 @@
+<div style="text-align:center;margin-bottom: 20px;" >
+  <span>گالری تصاویر</span>
+</div>
+<div class="container">
+  <span onclick="this.parentElement.style.display='none'" class="closebtn">&times;</span>
+  <img id="expandedImg" style="width:60%">
+  <div id="imgtext"></div>
+</div>
+<div class="row">
+  <div class="column" *ngFor="let item of images">
+    <img src="{{item}}" style="width:100%" (click)="showImage(item);">
+  </div>
+</div>

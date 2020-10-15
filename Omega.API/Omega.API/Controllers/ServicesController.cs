@@ -29,5 +29,16 @@ namespace Omega.API.Controllers
             var response = await _repo.GetServicesList();
             return Ok(response);
         }
+
+        [HttpGet]
+        [Route("item/{id}/Images")]
+        public async Task<object> GetItemImages(int id)
+        {
+            var serviceHasImage = await _repo.ServiceHasImage(id);
+            if (serviceHasImage == false)
+                return StatusCode(StatusCodes.Status500InternalServerError, new { Status = "Error", Message = "گالری مجود نیست" });
+            var images = await _repo.GetServiceImages(id);
+            return Ok(images);
+        }
     }
 }

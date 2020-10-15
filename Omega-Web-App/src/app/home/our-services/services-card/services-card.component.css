@@ -1,9 +1,0 @@
-  .example-card {
-    max-width: 200px;
-  }
-  
-  mat-card-header {
-      align-items: center;
-      text-align: center;
-      justify-self: start;
-  }

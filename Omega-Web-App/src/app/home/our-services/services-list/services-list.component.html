@@ -1,17 +1,14 @@
-<mat-grid-list cols="4" rowHeight="1:1" gutterSize="20px" style="margin-top: 50px;">
-  <mat-grid-tile>
+<mat-grid-list cols="{{breakpoint}}" rowHeight="1:1" (window:resize)="onResize($event)" gutterSize="20px" style="margin-top: 50px;">
+  <mat-grid-tile *ngFor="let item of services">
     <mat-card class="example-card">
     <mat-card-header style="justify-content: center;">
-      <mat-card-title>میز</mat-card-title>
+      <mat-card-title>{{item.name}}</mat-card-title>
     </mat-card-header>
-    <img mat-card-image style="width:70%;border-radius: 20px;" src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
+    <img mat-card-image style="width:70%;border-radius: 20px;height: 150px;" src="{{item.imageUrl}}" alt="{{item.name}}">
     <mat-card-actions>
-      <button mat-button>LIKE</button>
-      <button mat-button>SHARE</button>
+      <button mat-raised-button color="accent" (click)="openModal(item.serviceId)">مشاهده</button>
+      <button mat-raised-button color="primary">جزئیات</button>
     </mat-card-actions>
   </mat-card>
 </mat-grid-tile>
-  <mat-grid-tile>2</mat-grid-tile>
-  <mat-grid-tile>3</mat-grid-tile>
-  <mat-grid-tile>4</mat-grid-tile>
 </mat-grid-list>

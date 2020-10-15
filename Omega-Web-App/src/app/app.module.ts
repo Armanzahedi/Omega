@@ -1,7 +1,7 @@
+import { ServicesListComponent } from './home/our-services/services-list/services-list.component';
 import { RoleGuard } from './_guards/role.guard';
 import { UsersListComponent } from './dashboard/users/users-list/users-list.component';
 import { ErrorInterceptorProvider } from './_services/error.interceptor';
-import { OurServicesComponent } from './home/our-services/our-services.component';
 import { AuthService } from './_services/auth.service';
 import { LoginComponent } from './login/login.component';
 import { BrowserModule } from '@angular/platform-browser';
@@ -25,14 +25,19 @@ import {MatInputModule} from '@angular/material/input';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatGridListModule} from '@angular/material/grid-list';
+import {MatDialogModule} from '@angular/material/dialog';
+import { CommonModule } from '@angular/common';
+import { ServicesGalleryModalComponent } from './home/our-services/services-gallery-modal/services-gallery-modal.component';
+
 
 
 
 
 @NgModule({
-  declarations: [AppComponent, NavComponent, HomeComponent, DashboardComponent, LoginComponent,OurServicesComponent,UsersListComponent],
+  declarations: [AppComponent, NavComponent, HomeComponent, DashboardComponent, LoginComponent,ServicesListComponent,UsersListComponent,ServicesGalleryModalComponent],
   imports: [
     BrowserModule,
+    CommonModule,
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
@@ -45,7 +50,8 @@ import {MatGridListModule} from '@angular/material/grid-list';
     MatInputModule,
     MatMenuModule,
     MatProgressSpinnerModule,
-    MatGridListModule
+    MatGridListModule,
+    MatDialogModule
   ],
   providers: [AuthService,ErrorInterceptorProvider,RoleGuard],
   bootstrap: [AppComponent],

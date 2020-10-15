@@ -11,7 +11,9 @@ namespace Omega.Infrastructure.Repositories
 {
     public interface IBzApiRepository
     {
+        Task<IEnumerable<string>> GetServiceImages(int Id);
         Task<IEnumerable<ServicesForListDto>> GetServicesList();
+        Task<bool> ServiceHasImage(int Id);
     }
 
     public class BzApiRepository : IBzApiRepository
@@ -37,6 +39,30 @@ namespace Omega.Infrastructure.Repositories
                 servicesList.Add(service);
             }
             return servicesList;
+        }
+        public async Task<bool> ServiceHasImage(int Id)
+        {
+            dynamic response = await _bzoApiHelper.GetEndpoint($"/Service/item/{Id}/images");
+
+            if(response["success"] == false)
+                return false;
+
+            var data = response["data"];
+            if (data.Count < 1)
+                return false;
+
+            return true;
+        }
+        public async Task<IEnumerable<string>> GetServiceImages(int Id)
+        {
+            var imageUrls = new List<string>();
+            dynamic response = await _bzoApiHelper.GetEndpoint($"/Service/item/{Id}/images");
+            foreach (var item in response["data"])
+            {
+                var imageUrl = $"{_bzoApiHelper.GetBaseUrl()}/Service/item/{Id}/image/{item.imageId}";
+                imageUrls.Add(imageUrl);
+            }
+            return imageUrls;
         }
     }
 }
