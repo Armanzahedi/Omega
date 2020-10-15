@@ -1,0 +1,22 @@
+<mat-card>
+  <mat-card-content>
+    <form #loginForm="ngForm" (ngSubmit)="login()">
+      <span style="font-size:20px; padding-bottom:10px">ورود به حساب کاربری</span>
+      <mat-form-field class="full-width-input">
+        <input matInput autocomplete="off" name="UserName" placeholder="نام کاربری یا ایمیل" required [(ngModel)]="model.UserName">
+        <mat-error>
+          لطفا نام کاربری یا ایمیل خود را وارد کنید.
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="full-width-input">
+        <input matInput type="password" name="Password" placeholder="رمز عبور"  required [(ngModel)]="model.Password">
+        <mat-error>
+          لطفا رمز عبور خود را وارد کنید.
+        </mat-error>
+      </mat-form-field>
+      <button [disabled]="!loginForm.valid" mat-raised-button color="primary">ورود
+        <mat-spinner *ngIf="loading" color="accent" diameter="20">
+      </mat-spinner></button>
+    </form>
+  </mat-card-content>
+</mat-card>

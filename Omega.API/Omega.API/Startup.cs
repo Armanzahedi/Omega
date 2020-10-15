@@ -38,8 +38,7 @@ namespace Omega.API
             {
                 opt.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"), b => b.MigrationsAssembly("Omega.Infrastructure"));
             });
-            services.AddCors(opt => opt.AddPolicy("CorsPolicy",
-                policy => policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:44347")));
+            services.AddCors();
 
             services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<MyDbContext>().AddDefaultTokenProviders();
             services.AddAuthentication(options =>
@@ -71,11 +70,11 @@ namespace Omega.API
             {
                 app.UseDeveloperExceptionPage();
             }
+            app.UseCors(x=>x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 
             app.UseHttpsRedirection();
 
             app.UseRouting();
-
             app.UseAuthentication();
             app.UseAuthorization();
 

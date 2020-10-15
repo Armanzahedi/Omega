@@ -1,0 +1,15 @@
+<p>
+  <mat-toolbar color="primary">
+    <a routerLink="/" style="text-decoration: none; color: white;font-size: 27px;"><span>امگا</span></a>
+    <span class="example-spacer"></span>
+    <div *ngIf="(loggedIn() && router.url === '/admin')">
+      <button mat-button [matMenuTriggerFor]="menu">خوش آمدید {{authService.decodedToken?.unique_name}}</button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item><span>مدیریت کاربران</span></button>
+        <button mat-menu-item><span>گزارش گیری محصولات</span></button>
+        <button mat-menu-item (click)="logout()"><span>خروج</span></button>
+      </mat-menu>
+    </div>
+    <button *ngIf="router.url === '/'" routerLink="admin" mat-raised-button>پنل کاربری</button>
+  </mat-toolbar>
+</p>
