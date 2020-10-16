@@ -1,14 +1,49 @@
-  <mat-toolbar color="primary">
-    <a routerLink="/" style="text-decoration: none; color: white;font-size: 27px;"><span>امگا</span></a>
-    <span class="example-spacer"></span>
-    <div *ngIf="(loggedIn() && router.url.includes('/dashboard'))">
-      <button mat-raised-button routerLinkActive="mat-accent" *ngIf="authService.decodedToken?.role == 'Admin'" routerLink="/dashboard/users"><span>مدیریت کاربران</span></button>
-      <button mat-raised-button routerLinkActive="mat-accent" style="margin-right:10px;margin-left: 20px;"><span>گزارش گیری محصولات</span></button>
-      <button mat-button [matMenuTriggerFor]="menu">{{authService.decodedToken?.unique_name}}</button>
-      <mat-menu #menu="matMenu">
-        <button mat-menu-item (click)="logout()"><span>خروج</span></button>
-      </mat-menu>
-    </div>
-    <button *ngIf="(router.url === '/' && loggedIn())" routerLink="dashboard" mat-button>پنل کاربری</button>
-    <button *ngIf="(router.url === '/' && loggedIn() == false)" routerLink="dashboard" mat-button>ورود به حساب کاربری</button>
-  </mat-toolbar>
+<mat-toolbar color="primary">
+  <a routerLink="/" style="text-decoration: none; color: white; font-size: 27px"
+    ><span>امگا</span></a
+  >
+  <span class="spacer"></span>
+  <div *ngIf="loggedIn() && router.url.includes('/dashboard')">
+    <button
+      mat-raised-button
+      routerLinkActive="mat-accent"
+      *ngIf="authService.decodedToken?.role == 'Admin'"
+      routerLink="/dashboard/users"
+    >
+      <span>مدیریت کاربران</span>
+    </button>
+    <button
+      mat-raised-button
+      routerLinkActive="mat-accent"
+      style="margin-right: 10px; margin-left: 20px"
+      routerLink="/dashboard/services-report"
+    >
+      <span>گزارش گیری خدمات</span>
+    </button>
+    <button mat-button [matMenuTriggerFor]="menu">
+      {{ authService.decodedToken?.unique_name }}
+    </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item (click)="logout()"><span>خروج</span></button>
+    </mat-menu>
+  </div>
+  <button
+    *ngIf="
+      (router.url === '/' || router.url.includes('/services/')) && loggedIn()
+    "
+    routerLink="dashboard"
+    mat-button
+  >
+    پنل کاربری
+  </button>
+  <button
+    *ngIf="
+      (router.url === '/' || router.url.includes('/services/')) &&
+      loggedIn() == false
+    "
+    routerLink="dashboard"
+    mat-button
+  >
+    ورود به حساب کاربری
+  </button>
+</mat-toolbar>

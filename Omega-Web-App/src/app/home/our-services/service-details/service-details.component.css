@@ -1,0 +1,40 @@
+.card {
+  margin: 0 auto;
+  margin-top: 50px;
+  padding: 20px;
+  width: 80%;
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.5);
+}
+.card-top {
+  display: flex;
+}
+.card-image {
+  width: 200px;
+  height: 200px;
+}
+.card-info {
+  width: 500px;
+  height: 200px;
+  margin: 0 20px;
+}
+.card-title {
+  font-size: 25px;
+  padding-top: 20px;
+  font-weight: bolder;
+  display: block;
+  margin-bottom: 20px;
+}
+.card-subtitle {
+  font-size: 17px;
+  font-weight: 400;
+}
+.card-bottom {
+  margin-top: 20px;
+  width: 100%;
+}
+.card-description {
+  font-size: 25px;
+  font-weight: 500;
+  display: block;
+  margin-bottom: 10px;
+}

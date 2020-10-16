@@ -1,3 +1,5 @@
+import { ServicesReportComponent } from './dashboard/services-report/services-report.component';
+import { ServiceDetailsComponent } from './home/our-services/service-details/service-details.component';
 import { ServicesListComponent } from './home/our-services/services-list/services-list.component';
 import { RoleGuard } from './_guards/role.guard';
 import { UsersListComponent } from './dashboard/users/users-list/users-list.component';
@@ -19,22 +21,32 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { HomeComponent } from './home/home.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import {MatCardModule} from '@angular/material/card';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import {MatInputModule} from '@angular/material/input';
-import {MatMenuModule} from '@angular/material/menu';
-import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
-import {MatGridListModule} from '@angular/material/grid-list';
-import {MatDialogModule} from '@angular/material/dialog';
+import { MatCardModule } from '@angular/material/card';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatDialogModule } from '@angular/material/dialog';
 import { CommonModule } from '@angular/common';
 import { ServicesGalleryModalComponent } from './home/our-services/services-gallery-modal/services-gallery-modal.component';
-
-
-
-
+import { MatTableModule } from '@angular/material/table';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 
 @NgModule({
-  declarations: [AppComponent, NavComponent, HomeComponent, DashboardComponent, LoginComponent,ServicesListComponent,UsersListComponent,ServicesGalleryModalComponent],
+  declarations: [
+    AppComponent,
+    NavComponent,
+    HomeComponent,
+    DashboardComponent,
+    LoginComponent,
+    ServicesListComponent,
+    UsersListComponent,
+    ServicesGalleryModalComponent,
+    ServiceDetailsComponent,
+    ServicesReportComponent,
+  ],
   imports: [
     BrowserModule,
     CommonModule,
@@ -51,9 +63,17 @@ import { ServicesGalleryModalComponent } from './home/our-services/services-gall
     MatMenuModule,
     MatProgressSpinnerModule,
     MatGridListModule,
-    MatDialogModule
+    MatDialogModule,
+    MatTableModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
   ],
-  providers: [AuthService,ErrorInterceptorProvider,RoleGuard],
+  providers: [
+    AuthService,
+    ErrorInterceptorProvider,
+    RoleGuard,
+    MatDatepickerModule,
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

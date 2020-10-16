@@ -1,0 +1,27 @@
+<mat-spinner
+  *ngIf="loading"
+  style="margin: auto; margin-top: 50px"
+></mat-spinner>
+<div class="card" *ngIf="loading == false">
+  <div class="card-top">
+    <img
+      (click)="openGallery(service.serviceId)"
+      class="card-image"
+      src="{{ service.imageUrl }}"
+      alt="{{ service.name }}"
+    />
+    <div class="card-info">
+      <span class="card-title">{{ service.name }}</span>
+      <span class="card-subtitle"
+        >هزینه خدمات :{{ toPrice(service.price) }} ریال (
+        {{ service.unitMeasureName }} )</span
+      >
+    </div>
+  </div>
+  <div class="card-bottom">
+    <span class="card-description">توضیحات</span>
+    <p style="font-size: 15px; text-align: justify">
+      {{ service.description }}
+    </p>
+  </div>
+</div>

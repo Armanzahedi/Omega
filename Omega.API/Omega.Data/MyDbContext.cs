@@ -13,7 +13,7 @@ namespace Omega.Infrastructure
         {
         }
 
-        //public DbSet<Brand> Brands { get; set; }
+        public DbSet<Service> Services { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

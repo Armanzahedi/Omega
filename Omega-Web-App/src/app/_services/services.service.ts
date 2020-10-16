@@ -1,39 +1,86 @@
-import { IService } from './../_models/IService';
+import { Service } from '../_models/Service';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { map } from 'rxjs/operators';
+import { DatePipe, formatDate } from '@angular/common';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ServicesService {
-baseUrl = environment.apiUrl;
+  baseUrl = environment.apiUrl;
 
-constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {}
 
-getServices(): Observable<IService[]> {
-  var services: IService[] = new Array<IService>();
-
-  let params = new HttpParams();
-
-  return this.http.get<IService[]>(this.baseUrl + 'services/getAllItems', { observe: 'response', params})
-    .pipe(
-      map(response => {
-        services = response.body;
-        return services;
+  getAllServices(): Observable<Service[]> {
+    var services: Service[] = new Array<Service>();
+    return this.http
+      .get<Service[]>(this.baseUrl + 'services', { observe: 'response' })
+      .pipe(
+        map((response) => {
+          services = response.body;
+          return services;
+        })
+      );
+  }
+  getServiceImages(serviceId: number): Observable<string[]> {
+    var images: string[] = new Array<string>();
+    return this.http
+      .get<string[]>(this.baseUrl + 'services/' + serviceId + '/images', {
+        observe: 'response',
       })
-    );
-}
-getServiceImages(serviceId: number): Observable<string[]> {
-  var images: string[] = new Array<string>();
-  return this.http.get<string[]>(this.baseUrl + 'services/item/'+serviceId+'/images', { observe: 'response'})
-    .pipe(
-      map(response => {
-        images = response.body;
-        return images;
+      .pipe(
+        map((response) => {
+          images = response.body;
+          return images;
+        })
+      );
+  }
+  getService(serviceId: number): Observable<Service> {
+    var service: Service = new Service();
+    return this.http
+      .get<Service>(this.baseUrl + 'services/' + serviceId, {
+        observe: 'response',
       })
-    );
-}
+      .pipe(
+        map((response) => {
+          service = response.body;
+          return service;
+        })
+      );
+  }
+  getReport(reportParams?): Observable<Service[]> {
+    var services: Service[] = new Array<Service>();
+    let params = new HttpParams();
+    const format = 'dd/MM/yyyy';
+    const locale = 'en-US';
+    if (reportParams.searchString != null) {
+      params = params.append('searchString', reportParams.searchString);
+    }
+    if (reportParams.from != null) {
+      params = params.append(
+        'from',
+        formatDate(reportParams.from, format, locale)
+      );
+    }
+    if (reportParams.to != null) {
+      params = params.append('to', formatDate(reportParams.to, format, locale));
+    }
+    return this.http
+      .get<Service[]>(this.baseUrl + 'services/getReport', {
+        observe: 'response',
+        params: params,
+      })
+      .pipe(
+        map((response) => {
+          services = response.body;
+          return services;
+        })
+      );
+  }
+  updateServicesTable(): Observable<any> {
+    return this.http.get<any>(this.baseUrl + 'services/UpdateServicesTable');
+  }
 }

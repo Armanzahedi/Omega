@@ -43,7 +43,7 @@ namespace Omega.API
                 opt.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"), b => b.MigrationsAssembly("Omega.Infrastructure"));
             });
             services.AddCors();
-            services.AddAutoMapper(typeof(AuthRepsitory).Assembly);
+            services.AddAutoMapper(typeof(ServicesRepository).Assembly);
             services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<MyDbContext>().AddDefaultTokenProviders();
             services.AddAuthentication(options =>
             {
@@ -64,7 +64,7 @@ namespace Omega.API
                 };
             });
             services.AddScoped<IBzApiHelper, BzApiHelper>();
-            services.AddScoped<IBzApiRepository, BzApiRepository>();
+            services.AddScoped<IServicesRepository, ServicesRepository>();
             services.AddScoped<IAuthRepository, AuthRepsitory>();
         }
 

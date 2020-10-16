@@ -1,14 +1,40 @@
-<mat-grid-list cols="{{breakpoint}}" rowHeight="1:1" (window:resize)="onResize($event)" gutterSize="20px" style="margin-top: 50px;">
-  <mat-grid-tile *ngFor="let item of services">
-    <mat-card class="example-card">
-    <mat-card-header style="justify-content: center;">
-      <mat-card-title>{{item.name}}</mat-card-title>
-    </mat-card-header>
-    <img mat-card-image style="width:70%;border-radius: 20px;height: 150px;" src="{{item.imageUrl}}" alt="{{item.name}}">
-    <mat-card-actions>
-      <button mat-raised-button color="accent" (click)="openModal(item.serviceId)">مشاهده</button>
-      <button mat-raised-button color="primary">جزئیات</button>
-    </mat-card-actions>
-  </mat-card>
-</mat-grid-tile>
+<mat-grid-list
+  cols="{{ breakpoint }}"
+  rowHeight="1:1"
+  (window:resize)="onResize($event)"
+  gutterSize="20px"
+  style="margin-top: 50px"
+>
+  <mat-spinner *ngIf="loading" style="margin: auto"></mat-spinner>
+  <div *ngIf="!loading">
+    <mat-grid-tile *ngFor="let item of services">
+      <mat-card class="card">
+        <mat-card-header style="justify-content: center">
+          <mat-card-title>{{ item.name }}</mat-card-title>
+        </mat-card-header>
+        <img
+          mat-card-image
+          style="width: 70%; border-radius: 20px; height: 150px"
+          src="{{ item.imageUrl }}"
+          alt="{{ item.name }}"
+        />
+        <mat-card-actions>
+          <button
+            mat-raised-button
+            color="accent"
+            (click)="openGallery(item.serviceId)"
+          >
+            مشاهده
+          </button>
+          <button
+            mat-raised-button
+            color="primary"
+            (click)="goToDetails(item.serviceId)"
+          >
+            جزئیات
+          </button>
+        </mat-card-actions>
+      </mat-card>
+    </mat-grid-tile>
+  </div>
 </mat-grid-list>

@@ -1,0 +1,94 @@
+<div class="container">
+  <span class="title">گزارش گیری خدمات</span>
+  <form #filterForm="ngForm" (ngSubmit)="loadServices()">
+    <mat-form-field style="margin-top: 20px; margin-right: 5px">
+      <input
+        matInput
+        placeholder="جستجو..."
+        name="searchString"
+        [(ngModel)]="reportParams.searchString"
+      />
+    </mat-form-field>
+    <mat-form-field style="margin-right: 20px">
+      <mat-label>از تاریخ</mat-label>
+      <input
+        matInput
+        [matDatepicker]="fromDate"
+        name="from"
+        [(ngModel)]="reportParams.from"
+      />
+      <mat-datepicker-toggle matSuffix [for]="fromDate"></mat-datepicker-toggle>
+      <mat-datepicker #fromDate></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field style="margin-right: 20px">
+      <mat-label>تا تاریخ</mat-label>
+      <input
+        matInput
+        [matDatepicker]="toDate"
+        [(ngModel)]="reportParams.to"
+        name="to"
+      />
+      <mat-datepicker-toggle matSuffix [for]="toDate"></mat-datepicker-toggle>
+      <mat-datepicker #toDate></mat-datepicker>
+    </mat-form-field>
+    <button
+      mat-raised-button
+      style="margin-right: 20px; background-color: #14ba25; color: white"
+      (click)="loadServices()"
+    >
+      <span>فیلتر</span>
+    </button>
+  </form>
+  <mat-spinner
+    *ngIf="loading"
+    style="margin: auto; margin-top: 50px"
+  ></mat-spinner>
+  <table
+    *ngIf="!loading"
+    mat-table
+    [dataSource]="services"
+    class="mat-elevation-z8"
+  >
+    <ng-container matColumnDef="number">
+      <th mat-header-cell *matHeaderCellDef>No</th>
+      <td mat-cell *matCellDef="let element">{{ element.number }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef>نام</th>
+      <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="price">
+      <th mat-header-cell *matHeaderCellDef>قیمت</th>
+      <td mat-cell *matCellDef="let element">
+        {{ toPrice(element.price) }} ریال
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="unitMeasureName">
+      <th mat-header-cell *matHeaderCellDef>واحد</th>
+      <td mat-cell *matCellDef="let element">
+        {{ element.unitMeasureName }}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="contractorName">
+      <th mat-header-cell *matHeaderCellDef>پیمانکار</th>
+      <td mat-cell *matCellDef="let element">{{ element.contractorName }}</td>
+    </ng-container>
+    <ng-container matColumnDef="addedDate">
+      <th mat-header-cell *matHeaderCellDef>تاریخ ساخت</th>
+      <td mat-cell *matCellDef="let element">
+        {{ element.addedDate | date: "medium" }}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="modifiedDate">
+      <th mat-header-cell *matHeaderCellDef>تاریخ ویرایش</th>
+      <td mat-cell *matCellDef="let element">
+        {{ element.modifiedDate | date: "medium" }}
+      </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+</div>
