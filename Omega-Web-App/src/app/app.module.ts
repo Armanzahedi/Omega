@@ -33,6 +33,8 @@ import { ServicesGalleryModalComponent } from './home/our-services/services-gall
 import { MatTableModule } from '@angular/material/table';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { UsersFormModalComponent } from './dashboard/users/users-form-modal/users-form-modal/users-form-modal.component';
 
 @NgModule({
   declarations: [
@@ -46,6 +48,7 @@ import { MatNativeDateModule } from '@angular/material/core';
     ServicesGalleryModalComponent,
     ServiceDetailsComponent,
     ServicesReportComponent,
+    UsersFormModalComponent,
   ],
   imports: [
     BrowserModule,
@@ -67,6 +70,7 @@ import { MatNativeDateModule } from '@angular/material/core';
     MatTableModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    MatSlideToggleModule,
   ],
   providers: [
     AuthService,

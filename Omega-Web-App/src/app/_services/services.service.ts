@@ -1,5 +1,5 @@
 import { Service } from '../_models/Service';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
@@ -11,7 +11,8 @@ import { DatePipe, formatDate } from '@angular/common';
 })
 export class ServicesService {
   baseUrl = environment.apiUrl;
-
+  token = localStorage.getItem('token');
+  headers = new HttpHeaders().set('Authorization', 'Bearer ' + this.token);
   constructor(private http: HttpClient) {}
 
   getAllServices(): Observable<Service[]> {
@@ -72,6 +73,7 @@ export class ServicesService {
       .get<Service[]>(this.baseUrl + 'services/getReport', {
         observe: 'response',
         params: params,
+        headers: this.headers,
       })
       .pipe(
         map((response) => {
@@ -81,6 +83,8 @@ export class ServicesService {
       );
   }
   updateServicesTable(): Observable<any> {
-    return this.http.get<any>(this.baseUrl + 'services/UpdateServicesTable');
+    return this.http.get<any>(this.baseUrl + 'services/UpdateServicesTable', {
+      headers: this.headers,
+    });
   }
 }

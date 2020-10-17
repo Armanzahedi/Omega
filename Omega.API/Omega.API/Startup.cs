@@ -66,6 +66,7 @@ namespace Omega.API
             services.AddScoped<IBzApiHelper, BzApiHelper>();
             services.AddScoped<IServicesRepository, ServicesRepository>();
             services.AddScoped<IAuthRepository, AuthRepsitory>();
+            services.AddScoped<IUsersRepository, UsersRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -44,6 +44,7 @@ namespace Omega.Infrastructure.Helpers
             });
             #endregion
 
+            CreateMap<User, UsersTableDto>();
             CreateMap<Service, ServicesForListDto>();
             CreateMap<Service, ServicesForDetailDto>();
             CreateMap<Service, ServicesForReportDto>();

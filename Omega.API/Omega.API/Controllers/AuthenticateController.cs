@@ -34,24 +34,5 @@ namespace Omega.API.Controllers
                 expiration = token.ValidTo
             });
         }
-
-        [HttpPost]
-        [Route("register")]
-        public async Task<IActionResult> Register(UserRegisterDto model)
-        {
-            var userExists = await _repo.UserExists(model.UserName);
-            if (userExists)
-                return StatusCode(StatusCodes.Status500InternalServerError, new { Status = "Error", Message = "کاربر دیگری با همین نام در سیستم ثبت شده" });
-
-            var emailExists = await _repo.EmailExists(model.Email);
-            if (emailExists)
-            return StatusCode(StatusCodes.Status500InternalServerError, new { Status = "Error", Message = "کاربر دیگری با همین ایمیل در سیستم ثبت شده" });
-
-            var result = await _repo.Register(model);
-            if (!result.Succeeded)
-                return StatusCode(StatusCodes.Status500InternalServerError, new { Status = "Error", Message = "ثبت کاربر با مشکل مواجه شد لطفا ورودی های خود را چک کرده و مجددا تلاش کنید" });
-
-            return Ok(new { Status = "Success", Message = "کاربر با موفقیت ثبت شد." });
-        }
     }
 }

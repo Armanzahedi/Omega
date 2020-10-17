@@ -1,3 +1,55 @@
-<span>
-  users-list works!
-</span>
+<div class="container">
+  <span class="title">مدیریت کاربران</span>
+  <button
+    mat-raised-button
+    style="margin-right: 20px; background-color: #14ba25; color: white"
+    (click)="addUser()"
+  >
+    <span>کاربر جدید</span>
+  </button>
+  <mat-spinner
+    *ngIf="loading"
+    style="margin: auto; margin-top: 50px"
+  ></mat-spinner>
+  <table
+    *ngIf="!loading"
+    mat-table
+    [dataSource]="users"
+    class="mat-elevation-z8"
+  >
+    <ng-container matColumnDef="userName">
+      <th mat-header-cell *matHeaderCellDef>نام</th>
+      <td mat-cell *matCellDef="let element">{{ element.userName }}</td>
+    </ng-container>
+    <ng-container matColumnDef="email">
+      <th mat-header-cell *matHeaderCellDef>ایمیل</th>
+      <td mat-cell *matCellDef="let element">{{ element.email }}</td>
+    </ng-container>
+    <ng-container matColumnDef="role">
+      <th mat-header-cell *matHeaderCellDef>دسترسی</th>
+      <td mat-cell *matCellDef="let element">{{ element.role }}</td>
+    </ng-container>
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef>دستورات</th>
+      <td mat-cell *matCellDef="let element">
+        <button
+          mat-raised-button
+          color="primary"
+          style="margin-left: 10px"
+          (click)="editUser(element.id)"
+        >
+          <mat-icon style="color: white">create</mat-icon>
+        </button>
+        <button
+          mat-raised-button
+          color="accent"
+          (click)="deleteUser(element.id)"
+        >
+          <mat-icon style="color: white">delete</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+</div>

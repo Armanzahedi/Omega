@@ -1,0 +1,46 @@
+<form #userForm="ngForm" (ngSubmit)="addUser()">
+  <mat-form-field class="form-element">
+    <input
+      matInput
+      placeholder="نام"
+      autocomplete="off"
+      name="name"
+      required
+      [(ngModel)]="user.userName"
+    />
+    <mat-error> لطفا نام کاربری را وارد کنید. </mat-error>
+  </mat-form-field>
+  <mat-form-field class="form-element">
+    <input
+      matInput
+      placeholder="ایمیل"
+      autocomplete="off"
+      name="email"
+      required
+      [(ngModel)]="user.email"
+    />
+    <mat-error> لطفا ایمیل را وارد کنید. </mat-error>
+  </mat-form-field>
+  <mat-slide-toggle [(ngModel)]="user.isAdmin" name="isAdmin">
+    مدیر
+  </mat-slide-toggle>
+  <mat-form-field *ngIf="passwordField" class="form-element">
+    <input
+      matInput
+      autocomplete="off"
+      type="password"
+      name="Password"
+      placeholder="رمز عبور"
+      required
+      [(ngModel)]="user.password"
+    />
+    <mat-error> لطفا رمز عبور خود را وارد کنید. </mat-error>
+  </mat-form-field>
+  <button
+    [disabled]="!userForm.valid"
+    mat-raised-button
+    style="background-color: #14ba25; color: white; margin-top: 20px"
+  >
+    <span>ثبت</span>
+  </button>
+</form>

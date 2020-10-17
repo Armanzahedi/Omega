@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Omega.Infrastructure.Helpers;
@@ -52,6 +53,8 @@ namespace Omega.API.Controllers
 
         [HttpGet]
         [Route("UpdateServicesTable")]
+        [Authorize]
+
         public async Task<object> UpdateServicesTable()
         {
             var databaseUpdated = await _repo.UpdateServicesTable();
@@ -63,6 +66,8 @@ namespace Omega.API.Controllers
         }
         [HttpGet]
         [Route("GetReport")]
+        [Authorize]
+
         public async Task<object> GetServicesReport(string searchString,string from,string to)
         {
 

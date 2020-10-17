@@ -14,21 +14,16 @@ namespace Omega.Infrastructure.Repositories
 {
     public interface IAuthRepository
     {
-        Task<IdentityResult> Register(UserRegisterDto model);
         Task<JwtSecurityToken> Login(UserLoginDto model);
-        Task<bool> UserExists(string username);
-        Task<bool> EmailExists(string email);
     }
     public class AuthRepsitory : IAuthRepository
     {
         private readonly UserManager<User> userManager;
-        private readonly RoleManager<IdentityRole> roleManager;
         private readonly IConfiguration _configuration;
 
         public AuthRepsitory(UserManager<User> userManager, RoleManager<IdentityRole> roleManager, IConfiguration configuration)
         {
             this.userManager = userManager;
-            this.roleManager = roleManager;
             _configuration = configuration;
         }
         public async Task<JwtSecurityToken> Login(UserLoginDto model)
@@ -64,47 +59,6 @@ namespace Omega.Infrastructure.Repositories
                 return token;
             }
             return null;
-        }
-
-        public async Task<IdentityResult> Register(UserRegisterDto model)
-        {
-            User user = new User()
-            {
-                SecurityStamp = Guid.NewGuid().ToString(),
-                UserName = model.UserName,
-                Email = model.Email
-            };
-            var result = await userManager.CreateAsync(user, model.Password);
-            if (result.Succeeded)
-            {
-                if (model.IsAdmin)
-                {
-                    if (!await roleManager.RoleExistsAsync(UserRoles.Admin))
-                        await roleManager.CreateAsync(new IdentityRole(UserRoles.Admin));
-                    if (!await roleManager.RoleExistsAsync(UserRoles.User))
-                        await roleManager.CreateAsync(new IdentityRole(UserRoles.User));
-
-                    if (await roleManager.RoleExistsAsync(UserRoles.Admin))
-                    {
-                        await userManager.AddToRoleAsync(user, UserRoles.Admin);
-                    }
-                }
-            }
-            return result;
-        }
-        public async Task<bool> UserExists(string username)
-        {
-            var user = await userManager.FindByNameAsync(username);
-            if (user != null)
-                return true;
-            return false;
-        }
-        public async Task<bool> EmailExists(string email)
-        {
-            var user = await userManager.FindByEmailAsync(email);
-            if (user != null)
-                return true;
-            return false;
         }
     }
 }

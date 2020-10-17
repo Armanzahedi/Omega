@@ -4,8 +4,9 @@ using System.Text;
 
 namespace Omega.Core.Models
 {
-    public class Service : BaseEntity
+    public class Service
     {
+        public int Id { get; set; }
         public int ServiceId { get; set; }
         public string Name { get; set; }
         public string Code { get; set; }
@@ -20,5 +21,8 @@ namespace Omega.Core.Models
         public string ContractorName { get; set; }
         public int UnitMeasureId { get; set; }
         public string UnitMeasureName { get; set; }
+        public DateTime AddedDate { get; set; }
+        public DateTime? ModifiedDate { get; set; }
+        public bool Deleted { get; set; } = false;
     }
 }
